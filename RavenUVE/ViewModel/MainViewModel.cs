@@ -1,4 +1,7 @@
+using System.Windows;
+using System.Windows.Input;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 
 namespace RavenUVE.ViewModel
 {
@@ -29,6 +32,22 @@ namespace RavenUVE.ViewModel
             ////{
             ////    // Code runs "for real"
             ////}
+
+            ExitCommand = new RelayCommand(Exit);
         }
+
+        private void Exit()
+        {
+            Application.Current.Shutdown();
+        }
+
+        public ICommand ExitCommand
+        {
+            get;
+            private set;
+        }
+
+
+        
     }
 }

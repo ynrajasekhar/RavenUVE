@@ -1,8 +1,44 @@
 ﻿<Window x:Class="RavenUVE.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        xmlns:ad="http://avalondock.codeplex.com"
+        Title="Raven UVE" 
+        Height="350" 
+        Width="525"
+        DataContext="{Binding Main, Source={StaticResource Locator}}">
+    
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Ribbon x:Name="menuRibbon" SelectedIndex="0" IsMinimized="True">
+            <Ribbon.ApplicationMenu>
+                <RibbonApplicationMenu>
+                    <RibbonApplicationMenuItem Header="Exit" Command="{Binding ExitCommand}"/>
+                </RibbonApplicationMenu>
+            </Ribbon.ApplicationMenu>
+        </Ribbon>
+        <ad:DockingManager Grid.Row="1">
+            <ad:LayoutRoot>
+                <ad:LayoutPanel Orientation="Vertical">
+                    <ad:LayoutPanel Orientation="Horizontal">
+                        <ad:LayoutAnchorablePane DockWidth="150">
+                            <ad:LayoutAnchorable Title="Databases">
+                                <TextBox/>
+                            </ad:LayoutAnchorable>
+                        </ad:LayoutAnchorablePane>
+                        <ad:LayoutDocumentPane x:Name="ItemViews">
+          
+                        </ad:LayoutDocumentPane>
+                    </ad:LayoutPanel>
+                    <ad:LayoutAnchorablePane DockHeight="70" x:Name="Utils">
+                        <ad:LayoutAnchorable Title="Output">
+                            <TextBox/>
+                        </ad:LayoutAnchorable>
+                    </ad:LayoutAnchorablePane>
+                </ad:LayoutPanel>
+            </ad:LayoutRoot>
+        </ad:DockingManager>
     </Grid>
 </Window>
