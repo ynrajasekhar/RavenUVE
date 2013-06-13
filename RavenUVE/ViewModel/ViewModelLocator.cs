@@ -12,6 +12,7 @@
   See http://www.galasoft.ch/mvvm
 */
 
+using Common.Logging;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 
@@ -41,6 +42,7 @@ namespace RavenUVE.ViewModel
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
 
+            SimpleIoc.Default.Register<ILog>(() => LogManager.GetLogger("DBLogger"));
             SimpleIoc.Default.Register<MainViewModel>();
         }
 
@@ -48,10 +50,20 @@ namespace RavenUVE.ViewModel
         {
             get
             {
+                
+                Logger.Info(m => m("{0}: Requesting instance of {1}", GetType().Name, typeof(MainViewModel).Name));
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
         }
-        
+
+        private ILog Logger
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ILog>();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

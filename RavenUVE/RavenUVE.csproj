@@ -49,6 +49,12 @@
     <Reference Include="AvalonDock.Themes.VS2010">
       <HintPath>..\packages\AvalonDock.2.0.1746\lib\net40\AvalonDock.Themes.VS2010.dll</HintPath>
     </Reference>
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.NLog">
+      <HintPath>..\packages\Common.Logging.NLog.2.0.0\lib\2.0\Common.Logging.NLog.dll</HintPath>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight.Extras.WPF45">
       <HintPath>..\packages\MvvmLightLibs.4.1.27.0\lib\net45\GalaSoft.MvvmLight.Extras.WPF45.dll</HintPath>
     </Reference>
@@ -119,6 +125,7 @@
     </EmbeddedResource>
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>

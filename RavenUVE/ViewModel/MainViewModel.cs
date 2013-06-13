@@ -1,7 +1,10 @@
 using System.Windows;
 using System.Windows.Input;
+using Common.Logging;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Microsoft.Practices.ServiceLocation;
+using NLog;
 
 namespace RavenUVE.ViewModel
 {
@@ -38,6 +41,7 @@ namespace RavenUVE.ViewModel
 
         private void Exit()
         {
+            Logger.Info(m => m("{0}: Shutting down application.", GetType().Name));
             Application.Current.Shutdown();
         }
 
@@ -47,6 +51,13 @@ namespace RavenUVE.ViewModel
             private set;
         }
 
+        private ILog Logger
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ILog>();
+            }
+        }
 
         
     }
