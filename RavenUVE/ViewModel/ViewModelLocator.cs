@@ -44,6 +44,7 @@ namespace RavenUVE.ViewModel
 
             SimpleIoc.Default.Register<ILog>(() => LogManager.GetLogger("DBLogger"));
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<LoggingViewModel>();
         }
 
         public MainViewModel Main
@@ -53,6 +54,21 @@ namespace RavenUVE.ViewModel
                 
                 Logger.Info(m => m("{0}: Requesting instance of {1}", GetType().Name, typeof(MainViewModel).Name));
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
+            }
+        }
+
+        /// <summary>
+        /// Gets the LoggerView property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public LoggingViewModel LoggerView
+        {
+            get
+            {
+                Logger.Info(m => m("{0}: Requesting instance of {1}", GetType().Name, typeof(LoggingViewModel).Name));
+                return ServiceLocator.Current.GetInstance<LoggingViewModel>();
             }
         }
 
