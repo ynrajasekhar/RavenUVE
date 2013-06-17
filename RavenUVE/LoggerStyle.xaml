@@ -26,39 +26,20 @@
 					<Grid>
 						<Rectangle Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="{TemplateBinding BorderThickness}"/>
 						<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+						<Rectangle x:Name="Fade" Fill="#66F4F4F5"  Stroke="{x:Null}" />
 					</Grid>
-				
 					<ControlTemplate.Triggers>
-						<Trigger Property="IsKeyboardFocused" Value="true"/>
-						<Trigger Property="IsChecked" Value="true"/>
-						<Trigger Property="IsEnabled" Value="false">
-							<Setter Property="Background" Value="#ADADAD"/>
-							<Setter Property="Foreground" Value="#ADADAD"/>
+						<Trigger Property="IsChecked" Value="False">
+							<Setter Property="Visibility" TargetName="Fade" Value="Hidden"/>
 						</Trigger>
 					</ControlTemplate.Triggers>
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
 	</Style>
-	<Style x:Key="LabelStyle1" TargetType="{x:Type Label}">
-		<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-		<Setter Property="Background" Value="Transparent"/>
-		<Setter Property="Padding" Value="5"/>
-		<Setter Property="HorizontalContentAlignment" Value="Left"/>
-		<Setter Property="VerticalContentAlignment" Value="Top"/>
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="{x:Type Label}">
-					<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
-						<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-					</Border>
-					<ControlTemplate.Triggers>
-						<Trigger Property="IsEnabled" Value="false">
-							<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-						</Trigger>
-					</ControlTemplate.Triggers>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
+	<Color x:Key="ErrorColor">#FFE84545</Color>
+	<Color x:Key="WarningColor">#FFEAEA3A</Color>
+	<Color x:Key="InfoColor">#FFF0F0F0</Color>
+	<Color x:Key="DebugColor">#FFF9B72B</Color>
+	<Color x:Key="TraceColor">#FF65EE47</Color>
 </ResourceDictionary>

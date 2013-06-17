@@ -39,6 +39,17 @@ namespace NlogEventTarget
 
         #region Methods
 
+        public void Flush()
+        {
+            if (EventReceived != null)
+            {
+                while (logQueue.Count > 0)
+                {
+                    EventReceived(logQueue.Dequeue());
+                }
+            }
+        }
+
         protected override void Write(LogEventInfo logEvent)
         {
             if (logQueue.Count >= QueueSize)
@@ -48,13 +59,7 @@ namespace NlogEventTarget
 
             logQueue.Enqueue(logEvent);
 
-            if (EventReceived != null)
-            {
-                while (logQueue.Count > 0)
-                {
-                    EventReceived(logQueue.Dequeue());
-                }
-            }
+            Flush();
         }
 
         #endregion

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Threading;
+using Common.Logging;
 using GalaSoft.MvvmLight;
+using Microsoft.Practices.ServiceLocation;
 using NLog;
 using NlogEventTarget;
 
@@ -29,12 +32,46 @@ namespace RavenUVE.ViewModel
                 {
                     var eventTarget = target as EventTarget;
                     eventTarget.EventReceived += EventReceived;
+                    eventTarget.Flush();
                 }
             }
         }
 
         public static ObservableCollection<LogEventInfo> LogCollection { get; set; }
-        
+
+        public Visibility ErrorVisible
+        {
+            get
+            {
+                return Logger.IsErrorEnabled ? Visibility.Visible : Visibility.Collapsed;
+            }
+            set
+            {
+            }
+        }
+
+       public Visibility WarningVisible
+        {
+            get
+            {
+                return Logger.IsWarnEnabled ? Visibility.Visible : Visibility.Collapsed;
+            }
+            set
+            {
+            }
+        }
+
+        public Visibility InfoVisible
+        {
+            get
+            {
+                return Logger.IsInfoEnabled ? Visibility.Visible : Visibility.Collapsed;
+            }
+            set
+            {
+            }
+        }
+
         private void EventReceived(NLog.LogEventInfo eventLog)
         {
             Dispatcher.CurrentDispatcher.Invoke(new Action(() =>
@@ -46,5 +83,11 @@ namespace RavenUVE.ViewModel
                 LogCollection.Add(eventLog);
             }));
         }
+
+        private ILog Logger
+        {
+            get { return ServiceLocator.Current.GetInstance<ILog>(); }
+        }
+
     }
 }

@@ -5,23 +5,55 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.ignore.com"
         mc:Ignorable="d ignore"
-        Width="400"
-        Height="100"
+        d:Width="400"
+        d:Height="100"
         DataContext="{Binding LoggerView, Source={StaticResource Locator}}">
-
     <Grid>
     	<Grid.RowDefinitions>
     		<RowDefinition Height="Auto"/>
     		<RowDefinition/>
     	</Grid.RowDefinitions>
         <StackPanel HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Orientation="Horizontal">
-			<ToggleButton Content="Error" Margin="5,5,0,5" Width="75" Style="{DynamicResource LoggerToggleButtonStyle}" Background="#FFE84545" BorderThickness="2"/>
-			<ToggleButton Content="Warning" Margin="5,5,0,5" Width="75" Style="{DynamicResource LoggerToggleButtonStyle}"/>
-			<ToggleButton Content="Information" Margin="5,5,0,5" Width="75" Style="{DynamicResource LoggerToggleButtonStyle}"/>
-			<ToggleButton Content="Debug" Margin="5,5,0,5" Width="75" Style="{DynamicResource LoggerToggleButtonStyle}"/>
-			<ToggleButton Content="Trace" Margin="5,5,0,5" Width="75" Style="{DynamicResource LoggerToggleButtonStyle}"/>
+            <ToggleButton Content="Error" Margin="5,5,0,5" Width="75" Style="{DynamicResource LoggerToggleButtonStyle}" BorderThickness="2" Visibility="{Binding ErrorVisible}">
+            	<ToggleButton.Background>
+            		<SolidColorBrush Color="{DynamicResource ErrorColor}"/>
+            	</ToggleButton.Background>
+            </ToggleButton>
+            <ToggleButton Content="Warning" Margin="5,5,0,5" Width="75" Style="{DynamicResource LoggerToggleButtonStyle}" Visibility="{Binding WarningVisible}" >
+            	<ToggleButton.Background>
+            		<SolidColorBrush Color="{DynamicResource WarningColor}"/>
+            	</ToggleButton.Background>
+            </ToggleButton>
+            <ToggleButton Content="Information" Margin="5,5,0,5" Width="75" Style="{DynamicResource LoggerToggleButtonStyle}" Visibility="{Binding InfoVisible}" >
+            	<ToggleButton.Background>
+            		<SolidColorBrush Color="{DynamicResource InfoColor}"/>
+            	</ToggleButton.Background>
+            </ToggleButton>
+            <ToggleButton Content="Debug" Margin="5,5,0,5" Width="75" Style="{DynamicResource LoggerToggleButtonStyle}" Visibility="{Binding ErrorVisible}" >
+            	<ToggleButton.Background>
+            		<SolidColorBrush Color="{DynamicResource DebugColor}"/>
+            	</ToggleButton.Background>
+            </ToggleButton>
+            <ToggleButton Content="Trace" Margin="5,5,0,5" Width="75" Style="{DynamicResource LoggerToggleButtonStyle}" Visibility="{Binding ErrorVisible}" >
+            	<ToggleButton.Background>
+            		<SolidColorBrush Color="{DynamicResource TraceColor}"/>
+            	</ToggleButton.Background>
+            </ToggleButton>
 
 		</StackPanel>
-        <ListView ItemsSource="{Binding LogCollection}" Grid.Row="1"/>
+        <ListView ItemsSource="{Binding LogCollection}" Grid.Row="1" Name="logListView" Margin="5,0">
+			<ListView.ItemContainerStyle>
+				<Style TargetType="{x:Type ListViewItem}">
+					<Setter Property="ToolTip" Value="{Binding FormattedMessage}" />
+				</Style>
+			</ListView.ItemContainerStyle>
+			<ListView.View>
+				<GridView>
+					<GridViewColumn DisplayMemberBinding="{Binding Level}" Header="Level"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding FormattedMessage}" Width="500" Header="Message"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Exception}" Header="Exception"/>
+				</GridView>
+			</ListView.View>
+		</ListView>
     </Grid>
 </UserControl>
