@@ -4,7 +4,7 @@
         xmlns:ad="http://avalondock.codeplex.com"
         xmlns:log="clr-namespace:RavenUVE.Views"
         Title="Raven UVE" 
-        Height="350" 
+        Height="436" 
         Width="525"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
     
@@ -33,7 +33,7 @@
           
                         </ad:LayoutDocumentPane>
                     </ad:LayoutPanel>
-                    <ad:LayoutAnchorablePane DockHeight="70" x:Name="Utils">
+                    <ad:LayoutAnchorablePane DockHeight="120" x:Name="Utils">
                         <ad:LayoutAnchorable Title="Output">
                             <log:LoggerView/>
                         </ad:LayoutAnchorable>

@@ -26,15 +26,28 @@ namespace RavenUVE.ViewModel
         {
             LogCollection = new ObservableCollection<LogEventInfo>();
 
-            foreach (var target in NLog.LogManager.Configuration.AllTargets)
+            if (IsInDesignMode)
             {
-                if (target.Name.Equals("Event"))
+                LogCollection.Add(new LogEventInfo(NLog.LogLevel.Error, "Lorem Ipsum"));
+                LogCollection.Add(new LogEventInfo(NLog.LogLevel.Warn, "Lorem Ipsum"));
+                LogCollection.Add(new LogEventInfo(NLog.LogLevel.Info, "Lorem Ipsum"));
+                LogCollection.Add(new LogEventInfo(NLog.LogLevel.Debug, "Lorem Ipsum"));
+                LogCollection.Add(new LogEventInfo(NLog.LogLevel.Info, "Lorem Ipsum"));
+            }
+            else
+            {
+                foreach (var target in NLog.LogManager.Configuration.AllTargets)
                 {
-                    var eventTarget = target as EventTarget;
-                    eventTarget.EventReceived += EventReceived;
-                    eventTarget.Flush();
+                    if (target.Name.Equals("Event"))
+                    {
+                        var eventTarget = target as EventTarget;
+                        eventTarget.EventReceived += EventReceived;
+                        eventTarget.Flush();
+                    }
                 }
             }
+
+            
         }
 
         public static ObservableCollection<LogEventInfo> LogCollection { get; set; }
