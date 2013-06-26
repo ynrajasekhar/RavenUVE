@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4E51A0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NlogEventTarget", "NlogEventTarget\NlogEventTarget.csproj", "{260A171A-A2B5-428A-AEC0-03250835C637}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RavenUVETest", "RavenUVETest\RavenUVETest.csproj", "{5D8C3B82-C5D9-4F4E-8617-C89AC158950F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{260A171A-A2B5-428A-AEC0-03250835C637}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{260A171A-A2B5-428A-AEC0-03250835C637}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{260A171A-A2B5-428A-AEC0-03250835C637}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D8C3B82-C5D9-4F4E-8617-C89AC158950F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D8C3B82-C5D9-4F4E-8617-C89AC158950F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D8C3B82-C5D9-4F4E-8617-C89AC158950F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D8C3B82-C5D9-4F4E-8617-C89AC158950F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

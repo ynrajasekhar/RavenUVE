@@ -22,28 +22,33 @@ namespace RavenUVE.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
+
+        #region Fields
+
+        private readonly ILog logger;
+
+        #endregion
+
+        #region Constructor
+
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel()
+        public MainViewModel(ILog logger)
         {
-            ////if (IsInDesignMode)
-            ////{
-            ////    // Code runs in Blend --> create design time data.
-            ////}
-            ////else
-            ////{
-            ////    // Code runs "for real"
-            ////}
-
+            this.logger = logger;
             ExitCommand = new RelayCommand(Exit);
         }
 
-        private void Exit()
+        internal MainViewModel(ILog logger, ICommand exitCommand)
         {
-            Logger.Info(m => m("{0}: Shutting down application.", GetType().Name));
-            Application.Current.Shutdown();
+            this.logger = logger;
+            ExitCommand = exitCommand;
         }
+
+        #endregion
+
+        #region Properties
 
         public ICommand ExitCommand
         {
@@ -51,14 +56,17 @@ namespace RavenUVE.ViewModel
             private set;
         }
 
-        private ILog Logger
+        #endregion
+
+        #region Methods
+
+        private void Exit()
         {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<ILog>();
-            }
+            logger.Info(m => m("{0}: Shutting down application.", GetType().Name));
+            Application.Current.Shutdown();
         }
 
-        
+        #endregion
+
     }
 }
