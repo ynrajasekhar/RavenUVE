@@ -15,6 +15,8 @@
 using Common.Logging;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
+using Raven.Client;
+using Raven.Client.Document;
 
 namespace RavenUVE.ViewModel
 {
@@ -45,13 +47,13 @@ namespace RavenUVE.ViewModel
             SimpleIoc.Default.Register<ILog>(() => LogManager.GetLogger("DBLogger"));
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<LoggingViewModel>();
+            SimpleIoc.Default.Register<ConnectViewModel>();
         }
 
         public MainViewModel Main
         {
             get
             {
-                
                 Logger.Info(m => m("{0}: Requesting instance of {1}", GetType().Name, typeof(MainViewModel).Name));
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
@@ -69,6 +71,20 @@ namespace RavenUVE.ViewModel
             {
                 Logger.Info(m => m("{0}: Requesting instance of {1}", GetType().Name, typeof(LoggingViewModel).Name));
                 return ServiceLocator.Current.GetInstance<LoggingViewModel>();
+            }
+        }
+
+        /// <summary>
+        /// Gets the ConnectDialog property.
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public ConnectViewModel ConnectDialog
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ConnectViewModel>();
             }
         }
 

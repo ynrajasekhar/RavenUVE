@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Practices.ServiceLocation;
 using NLog;
+using RavenUVE.Views;
 
 namespace RavenUVE.ViewModel
 {
@@ -26,6 +27,7 @@ namespace RavenUVE.ViewModel
         #region Fields
 
         private readonly ILog logger;
+        private bool isConnected;
 
         #endregion
 
@@ -38,6 +40,9 @@ namespace RavenUVE.ViewModel
         {
             this.logger = logger;
             ExitCommand = new RelayCommand(Exit);
+            ConnectCommand = new RelayCommand(Connect, CanConnect);
+            DisconnectCommand = new RelayCommand(Disconnect, CanDisconnect);
+
         }
 
         internal MainViewModel(ILog logger, ICommand exitCommand)
@@ -50,11 +55,11 @@ namespace RavenUVE.ViewModel
 
         #region Properties
 
-        public ICommand ExitCommand
-        {
-            get;
-            private set;
-        }
+        public ICommand ExitCommand { get; private set; }
+
+        public ICommand ConnectCommand { get; private set; }
+
+        public ICommand DisconnectCommand { get; private set; }
 
         #endregion
 
@@ -64,6 +69,28 @@ namespace RavenUVE.ViewModel
         {
             logger.Info(m => m("{0}: Shutting down application.", GetType().Name));
             Application.Current.Shutdown();
+        }
+
+        private void Disconnect()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private bool CanDisconnect()
+        {
+            return isConnected;
+        }
+
+        private void Connect()
+        {
+            var dialog = new ConnectView();
+            dialog.ShowDialog();
+            isConnected = true;
+        }
+
+        private bool CanConnect()
+        {
+            return !isConnected;
         }
 
         #endregion

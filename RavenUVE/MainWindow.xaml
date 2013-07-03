@@ -16,6 +16,7 @@
         <Ribbon x:Name="menuRibbon" SelectedIndex="0" IsMinimized="True">
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu>
+                    <RibbonApplicationMenuItem Header="Connect" Command="{Binding ConnectCommand}"/>
                     <RibbonApplicationMenuItem Header="Exit" Command="{Binding ExitCommand}"/>
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
