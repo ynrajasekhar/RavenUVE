@@ -50,7 +50,7 @@
 			</ListView.ItemContainerStyle>
 			<ListView.View>
 				<GridView>
-					<GridViewColumn DisplayMemberBinding="{Binding Level}" Header="Level"/>
+					<GridViewColumn DisplayMemberBinding="{Binding Level}" Header="Level" Width="60"/>
                         <GridViewColumn DisplayMemberBinding="{Binding FormattedMessage}" Width="500" Header="Message"/>
                         <GridViewColumn DisplayMemberBinding="{Binding Exception}" Header="Exception"/>
 				</GridView>

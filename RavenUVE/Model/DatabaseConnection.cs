@@ -1,12 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Diagnostics.Contracts;
 
 namespace RavenUVE.Model
 {
+
+    [Serializable]
     public class DatabaseConnection
     {
+
+        public DatabaseConnection()
+        {
+            Name = String.Empty;
+            Url = String.Empty;
+        }
+
+        public DatabaseConnection(DatabaseConnection dbConnection)
+        {
+            Contract.Requires(null != dbConnection);
+
+            Name = dbConnection.Name;
+            Url = dbConnection.Url;
+        }
 
         public String Name { get; set; }
 

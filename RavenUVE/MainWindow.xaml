@@ -4,8 +4,8 @@
         xmlns:ad="http://avalondock.codeplex.com"
         xmlns:log="clr-namespace:RavenUVE.Views"
         Title="Raven UVE" 
-        Height="436" 
-        Width="525"
+        Height="600" 
+        Width="800"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
     
     <Grid x:Name="LayoutRoot">
@@ -17,6 +17,7 @@
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu>
                     <RibbonApplicationMenuItem Header="Connect" Command="{Binding ConnectCommand}"/>
+                    <RibbonApplicationMenuItem Header="Disconnect" Command="{Binding DisconnectCommand}"/>
                     <RibbonApplicationMenuItem Header="Exit" Command="{Binding ExitCommand}"/>
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
@@ -34,7 +35,7 @@
           
                         </ad:LayoutDocumentPane>
                     </ad:LayoutPanel>
-                    <ad:LayoutAnchorablePane DockHeight="120" x:Name="Utils">
+                    <ad:LayoutAnchorablePane DockHeight="160" x:Name="Utils">
                         <ad:LayoutAnchorable Title="Output">
                             <log:LoggerView/>
                         </ad:LayoutAnchorable>

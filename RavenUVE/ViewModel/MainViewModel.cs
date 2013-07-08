@@ -1,10 +1,14 @@
+using System.Diagnostics.Contracts;
 using System.Windows;
 using System.Windows.Input;
 using Common.Logging;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Practices.ServiceLocation;
 using NLog;
+using Raven.Client;
+using RavenUVE.Model;
 using RavenUVE.Views;
 
 namespace RavenUVE.ViewModel
@@ -27,6 +31,9 @@ namespace RavenUVE.ViewModel
         #region Fields
 
         private readonly ILog logger;
+        private readonly IMessenger messenger;
+        private IDocumentStore documentStore;
+        private readonly IConfiguration configuration;
         private bool isConnected;
 
         #endregion
@@ -36,13 +43,20 @@ namespace RavenUVE.ViewModel
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel(ILog logger)
+        public MainViewModel(ILog logger, IMessenger messenger, IConfiguration configuration)
         {
+            Contract.Requires(null != logger);
+            Contract.Requires(null != messenger);
+            Contract.Requires(null != configuration);
+
             this.logger = logger;
+            this.messenger = messenger;
+            this.configuration = configuration;
             ExitCommand = new RelayCommand(Exit);
             ConnectCommand = new RelayCommand(Connect, CanConnect);
             DisconnectCommand = new RelayCommand(Disconnect, CanDisconnect);
 
+            messenger.Register<GenericMessage<IDocumentStore>>(this, ServerConnected);
         }
 
         internal MainViewModel(ILog logger, ICommand exitCommand)
@@ -68,12 +82,16 @@ namespace RavenUVE.ViewModel
         private void Exit()
         {
             logger.Info(m => m("{0}: Shutting down application.", GetType().Name));
+            Properties.Settings.Default.Save();
             Application.Current.Shutdown();
         }
 
         private void Disconnect()
         {
-            throw new System.NotImplementedException();
+            messenger.Send<NotificationMessage>(new NotificationMessage("Disconnected"));
+            documentStore.Dispose();
+            documentStore = null;
+            isConnected = false;
         }
 
         private bool CanDisconnect()
@@ -85,12 +103,18 @@ namespace RavenUVE.ViewModel
         {
             var dialog = new ConnectView();
             dialog.ShowDialog();
-            isConnected = true;
         }
 
         private bool CanConnect()
         {
             return !isConnected;
+        }
+
+        private void ServerConnected(GenericMessage<IDocumentStore> serverMessage)
+        {
+            Contract.Requires(null != serverMessage);
+            isConnected = true;
+            documentStore = serverMessage.Content;
         }
 
         #endregion

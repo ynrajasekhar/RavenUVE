@@ -136,10 +136,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Configuration.cs" />
+    <Compile Include="Model\IConfiguration.cs" />
     <Compile Include="ViewModel\ConnectViewModel.cs" />
     <Compile Include="Model\DatabaseConnection.cs" />
+    <Compile Include="ViewModel\EditServerViewModel.cs" />
     <Compile Include="Views\ConnectView.xaml.cs">
       <DependentUpon>ConnectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditServerView.xaml.cs">
+      <DependentUpon>EditServerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Utils\IRequestCloseViewModel.cs" />
     <Compile Include="Views\Utils\ListView.cs" />
@@ -167,6 +173,10 @@
     </Compile>
     <Page Include="Views\ConnectView.xaml">
       <SubType>Form</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditServerView.xaml">
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LoggerView.xaml">

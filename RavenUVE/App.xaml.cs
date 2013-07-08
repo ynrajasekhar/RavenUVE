@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.Specialized;
+using System.Windows;
 using GalaSoft.MvvmLight.Threading;
 
 namespace RavenUVE
@@ -12,5 +13,6 @@ namespace RavenUVE
         {
             DispatcherHelper.Initialize();
         }
+
     }
 }

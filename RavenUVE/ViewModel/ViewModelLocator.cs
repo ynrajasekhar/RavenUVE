@@ -14,9 +14,11 @@
 
 using Common.Logging;
 using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Practices.ServiceLocation;
 using Raven.Client;
 using Raven.Client.Document;
+using RavenUVE.Model;
 
 namespace RavenUVE.ViewModel
 {
@@ -45,6 +47,8 @@ namespace RavenUVE.ViewModel
             ////}
 
             SimpleIoc.Default.Register<ILog>(() => LogManager.GetLogger("DBLogger"));
+            SimpleIoc.Default.Register<IMessenger>(() => Messenger.Default);
+            SimpleIoc.Default.Register<IConfiguration, Configuration>();
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<LoggingViewModel>();
             SimpleIoc.Default.Register<ConnectViewModel>();
