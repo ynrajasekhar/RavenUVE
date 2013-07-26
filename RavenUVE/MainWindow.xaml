@@ -17,6 +17,7 @@
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu>
                     <RibbonApplicationMenuItem Header="Connect" Command="{Binding ConnectCommand}"/>
+                    <RibbonApplicationMenuItem Header="Run GC" Click="RibbonApplicationMenuItem_Click"/>  
                     <RibbonApplicationMenuItem Header="Disconnect" Command="{Binding DisconnectCommand}"/>
                     <RibbonApplicationMenuItem Header="Exit" Command="{Binding ExitCommand}"/>
                 </RibbonApplicationMenu>

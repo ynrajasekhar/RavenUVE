@@ -24,5 +24,10 @@ namespace RavenUVE
         {
             InitializeComponent();
         }
+
+        private void RibbonApplicationMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            GC.Collect();
+        }
     }
 }

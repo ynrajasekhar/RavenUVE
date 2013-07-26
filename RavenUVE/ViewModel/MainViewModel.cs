@@ -83,6 +83,7 @@ namespace RavenUVE.ViewModel
         {
             logger.Info(m => m("{0}: Shutting down application.", GetType().Name));
             Properties.Settings.Default.Save();
+            logger.Debug(m => m("{0}: Settings saved.", GetType().Name));
             Application.Current.Shutdown();
         }
 
@@ -92,6 +93,7 @@ namespace RavenUVE.ViewModel
             documentStore.Dispose();
             documentStore = null;
             isConnected = false;
+            logger.Info(m => m("{0}: Disconnected.", GetType().Name));
         }
 
         private bool CanDisconnect()
@@ -103,6 +105,7 @@ namespace RavenUVE.ViewModel
         {
             var dialog = new ConnectView();
             dialog.ShowDialog();
+            dialog = null;
         }
 
         private bool CanConnect()

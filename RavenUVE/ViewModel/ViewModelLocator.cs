@@ -13,6 +13,7 @@
 */
 
 using Common.Logging;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Practices.ServiceLocation;
@@ -35,23 +36,28 @@ namespace RavenUVE.ViewModel
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-            ////if (ViewModelBase.IsInDesignModeStatic)
-            ////{
-            ////    // Create design time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DesignDataService>();
-            ////}
-            ////else
-            ////{
-            ////    // Create run time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DataService>();
-            ////}
+            if (ViewModelBase.IsInDesignModeStatic)
+            {
+                // Create design time view services and models
+                if (!SimpleIoc.Default.IsRegistered<ILog>())
+                    SimpleIoc.Default.Register<ILog>(() => LogManager.GetLogger("DBLogger"));
+                if (!SimpleIoc.Default.IsRegistered<IMessenger>())
+                    SimpleIoc.Default.Register<IMessenger>(() => Messenger.Default);
+                if (!SimpleIoc.Default.IsRegistered<IMessenger>())
+                    SimpleIoc.Default.Register<IConfiguration, Configuration>();
+            }
+            else
+            {
+                // Create run time view services and models
+                SimpleIoc.Default.Register<ILog>(() => LogManager.GetLogger("DBLogger"));
+                SimpleIoc.Default.Register<IMessenger>(() => Messenger.Default);
+                SimpleIoc.Default.Register<IConfiguration, Configuration>();
+            }
 
-            SimpleIoc.Default.Register<ILog>(() => LogManager.GetLogger("DBLogger"));
-            SimpleIoc.Default.Register<IMessenger>(() => Messenger.Default);
             SimpleIoc.Default.Register<IConfiguration, Configuration>();
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<LoggingViewModel>();
-            SimpleIoc.Default.Register<ConnectViewModel>();
+            //SimpleIoc.Default.Register<ConnectViewModel>();
         }
 
         public MainViewModel Main
@@ -88,7 +94,10 @@ namespace RavenUVE.ViewModel
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<ConnectViewModel>();
+                Logger.Info(m => m("{0}: Requesting instance of {1}", GetType().Name, typeof(ConnectViewModel).Name));
+                return new ConnectViewModel(ServiceLocator.Current.GetInstance<ILog>(), 
+                    ServiceLocator.Current.GetInstance<IMessenger>(), 
+                    ServiceLocator.Current.GetInstance<IConfiguration>());
             }
         }
 

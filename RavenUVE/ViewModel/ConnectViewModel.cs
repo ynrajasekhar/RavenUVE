@@ -13,6 +13,7 @@ using Raven.Client;
 using Raven.Client.Document;
 using GalaSoft.MvvmLight.Messaging;
 using RavenUVE.Views;
+using System.Reflection;
 
 namespace RavenUVE.ViewModel
 {
@@ -126,40 +127,39 @@ namespace RavenUVE.ViewModel
 
         private void Cancel()
         {
-            logger.Trace(m => m("{0}: Entering Cancel method.", className));
+            logger.Trace(m => m("{0}: Entering {1} method.", className, MethodBase.GetCurrentMethod().Name));
             Close();
-            logger.Trace(m => m("{0}: Exiting Cancel method.", className));
+            logger.Trace(m => m("{0}: Exiting {1} method.", className, MethodBase.GetCurrentMethod().Name));
         }
 
         private void Close()
         {
-            logger.Trace(m => m("{0}: Entering Close method.", className));
+            logger.Trace(m => m("{0}: Entering {1} method.", className, MethodBase.GetCurrentMethod().Name));
             configuration.Save();
             if (RequestClose != null)
             {
                 RequestClose(this, new EventArgs());
             }
-            logger.Trace(m => m("{0}: Exiting Close method.", className));
+            logger.Trace(m => m("{0}: Exiting {1} method.", className, MethodBase.GetCurrentMethod().Name));
         }
 
         private bool ConnectionDialogCanConnect()
         {
-            logger.Trace(m => m("{0}: Entering CanConnect method.", className));
             return selectedServer != null;
         }
 
         private void ConnectionDialogConnect()
         {
-            logger.Trace(m => m("{0}: Entering Connect method.", className));
+            logger.Trace(m => m("{0}: Entering {1} method.", className, MethodBase.GetCurrentMethod().Name));
             var documentStore = new DocumentStore { Url = selectedServer.Url };
             messenger.Send<GenericMessage<IDocumentStore>>(new GenericMessage<IDocumentStore>(this, documentStore));
             Close();
-            logger.Trace(m => m("{0}: Leaving Connect method.", className));
+            logger.Trace(m => m("{0}: Exiting {1} method.", className, MethodBase.GetCurrentMethod().Name));
         }
 
         private void Edit()
         {
-            logger.Trace(m => m("{0}: Entering Edit method.", className));
+            logger.Trace(m => m("{0}: Entering {1} method.", className, MethodBase.GetCurrentMethod().Name));
             if (selectedServer != null)
             {
                 var copyOfSelectedServer = new DatabaseConnection(selectedServer);
@@ -176,24 +176,22 @@ namespace RavenUVE.ViewModel
                 }
             }
 
-            logger.Trace(m => m("{0}: Leaving Connect method.", className));
+            logger.Trace(m => m("{0}: Exiting {1} method.", className, MethodBase.GetCurrentMethod().Name));
         }
 
         private bool CanEdit()
-        {
-            logger.Trace(m => m("{0}: Entering CanEdit method.", className));
+        {            
             return selectedServer != null;
         }
 
         private bool CanRemove()
         {
-            logger.Trace(m => m("{0}: Entering CanRemove method.", className));
             return selectedServer != null;
         }
 
         private void Remove()
         {
-            logger.Trace(m => m("{0}: Entering Remove method.", className));
+            logger.Trace(m => m("{0}: Entering {1} method.", className, MethodBase.GetCurrentMethod().Name));
 
             if (selectedServer != null)
             {
@@ -207,12 +205,12 @@ namespace RavenUVE.ViewModel
                 }
             }
 
-            logger.Trace(m => m("{0}: Leaving Remove method.", className));
+            logger.Trace(m => m("{0}: Exiting {1} method.", className, MethodBase.GetCurrentMethod().Name));
         }
 
         private void Add()
         {
-            logger.Trace(m => m("{0}: Entering Remove method.", className));
+            logger.Trace(m => m("{0}: Entering {1} method.", className, MethodBase.GetCurrentMethod().Name));
 
             var dbConnection = new DatabaseConnection();
             var editConnectionDialog = new EditServerView(dbConnection, logger);
@@ -223,7 +221,7 @@ namespace RavenUVE.ViewModel
                 configuration.Servers.Add(dbConnection);
             }
 
-            logger.Trace(m => m("{0}: Leaving Remove method.", className));
+            logger.Trace(m => m("{0}: Exiting {1} method.", className, MethodBase.GetCurrentMethod().Name));
         }
 
         #endregion

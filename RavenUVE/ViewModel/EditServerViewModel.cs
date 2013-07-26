@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics.Contracts;
+using System.Reflection;
 using System.Windows.Input;
 using Common.Logging;
 using GalaSoft.MvvmLight.Command;
@@ -33,9 +34,12 @@ namespace RavenUVE.ViewModel
             Contract.Requires(null != dbConnection);
             Contract.Requires(null != logger);
 
+            logger.Trace(m => m("EditServerViewModel: Creating."));
+
             this.dbConnection = dbConnection;
             this.logger = logger;
 
+            logger.Trace(m => m("EditServerViewModel: Created.", className));
         }
 
         #endregion
@@ -82,10 +86,12 @@ namespace RavenUVE.ViewModel
 
         private void OnPropertyChanged(string propertyName)
         {
+            logger.Trace(m => m("{0}: Entering {1} method. propertyName: ", GetType().Name, MethodBase.GetCurrentMethod().Name, propertyName));
             if (null != PropertyChanged)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+            logger.Trace(m => m("{0}: Exiting {1} method.", GetType().Name, MethodBase.GetCurrentMethod().Name));
         }
 
         private bool CanOk()
@@ -95,23 +101,29 @@ namespace RavenUVE.ViewModel
 
         private void Ok()
         {
+            logger.Trace(m => m("{0}: Entering {1} method.", GetType().Name, MethodBase.GetCurrentMethod().Name));
             Close();
+            logger.Trace(m => m("{0}: Exiting {1} method.", GetType().Name, MethodBase.GetCurrentMethod().Name));
         }
 
         private void Cancel()
         {
             Contract.Ensures(dbConnection.Name == String.Empty);
+            logger.Trace(m => m("{0}: Entering {1} method.", GetType().Name, MethodBase.GetCurrentMethod().Name));
             dbConnection.Name = String.Empty;
             Close();
+            logger.Trace(m => m("{0}: Exiting {1} method.", GetType().Name, MethodBase.GetCurrentMethod().Name));
         }
 
         private void Close()
         {
+            logger.Trace(m => m("{0}: Entering {1} method.", GetType().Name, MethodBase.GetCurrentMethod().Name));
             var handler = RequestClose;
             if (null != handler)
             {
                 handler(this, EventArgs.Empty);
             }
+            logger.Trace(m => m("{0}: Exiting {1} method.", GetType().Name, MethodBase.GetCurrentMethod().Name));
         }
 
         #endregion
